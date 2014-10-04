@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<pipeline name="CountBeadAttachedCells">
+    <operation name="CellBeadProximityFilterOp">
+        <maxDistance>30</maxDistance>
+    </operation>
+
+    <operation name="ShowImageOp">
+        <windowName>"bead-filtered cells"</windowName>
+        <on>True</on>
+        <key>"img"</key>
+    </operation>
+</pipeline>
+
+

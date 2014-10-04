@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<pipeline name="unstainedSegmentCells">
+    
+    <!-- input to pipeline: {"img": img} -->
+
+    <operation name="ConvertColorOp">
+        <colorSpaceConstant name="cv2.COLOR_BGR2HSV">40L</colorSpaceConstant>
+    </operation>
+
+    <operation name="ConvertColorOp">
+        <colorSpaceConstant name="cv2.COLOR_BGR2GRAY">6L</colorSpaceConstant>
+    </operation>
+
+    <operation name="ShowImageOp">
+        <windowName>"gray"</windowName>
+        <on>False</on>
+        <key>"grayImg"</key>
+    </operation>
+
+    <operation name="BlurOp">
+        <kernelSize>5</kernelSize>
+    </operation>
+
+    <operation name="ShowImageOp">
+        <windowName>"gray blurred"</windowName>
+        <on>False</on>
+        <key>"img"</key>
+    </operation>
+
+    <repeat>
+        <iterations>10</iterations>
+        <operation name="ErodeOp">
+            <kernelSize>3</kernelSize>
+        </operation>
+        <operation name="DilateOp">
+            <kernelSize>3</kernelSize>
+        </operation>
+    </repeat>
+
+    <operation name="ShowImageOp">
+        <windowName>"Post Erode/Dilate"</windowName>
+        <on>False</on>
+        <key>"img"</key>
+    </operation>
+
+    <operation name="GetBlobsFromContoursOp">
+        <blobType>"Cells"</blobType>
+    </operation>
+
+    <operation name="ShowImageOp">
+        <windowName>"unfilteredBlobsImg"</windowName>
+        <on>False</on>
+        <key>"unfilteredBlobsImg"</key>
+    </operation>
+
+    <operation name="FilterBlobsOp">
+        <lowerArea>50</lowerArea>
+        <upperArea>500</upperArea>
+        <lowerHue>0</lowerHue>
+        <upperHue>255</upperHue>
+    </operation>
+
+    <operation name="ShowImageOp">
+        <windowName>"filteredBlobsImg"</windowName>
+        <on>True</on>
+        <key>"filteredBlobsImg"</key>
+    </operation>
+
+</pipeline>
