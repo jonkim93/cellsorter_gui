@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-from ArgParser import *
-from pipeline import *
+from objects.argParser import *
+from objects.pipeline import *
 import sys
-from constants import *
+from objects.constants import *
 import cv2
 
 

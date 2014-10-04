@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-from ArgParser import *
-from pipeline import *
+from objects.argParser import *
+from objects.pipeline import *
 import sys
 
 def main(imgPath):
