@@ -27,7 +27,7 @@
 
     <operation name="ShowImageOp">
         <windowName>"adaptiveThreshold (beads)"</windowName>
-        <on>True</on>
+        <on>False</on>
         <key>"img"</key>
     </operation>
 
@@ -72,7 +72,7 @@
 
     <operation name="ShowImageOp">
         <windowName>"post canny (beads)"</windowName>
-        <on>True</on>
+        <on>False</on>
         <key>"img"</key>
     </operation>
 
@@ -89,7 +89,7 @@
 
     <operation name="ShowImageOp">
         <windowName>"unfilteredBlobsImg (beads)"</windowName>
-        <on>True</on>
+        <on>False</on>
         <key>"unfilteredBlobsImg"</key>
     </operation>
 

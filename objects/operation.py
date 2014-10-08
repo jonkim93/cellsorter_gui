@@ -286,13 +286,16 @@ class CellBeadProximityFilterOp(Operation):
 		super(CellBeadProximityFilterOp, self).execute()
 		filteredCells = []
 		count = 0
+		if DEBUG:
+			print "NUMBER OF CELLS: ",str(len(self.parameters["cells"]))
 		for cell in self.parameters["cells"]:
 			for bead in self.parameters["beads"]:
 				if cell.calculateDistance(bead) < self.parameters["maxDistance"]:
 					filteredCells.append(cell)
 					x,y,w,h = cell.getBoundingBox()
 					cv2.rectangle(self.pipeline.values["img"], (x,y), (x+w, y+h), (60,140,140),2 )
-					print "NUM CELLS IN BLOB: %d" % (-(-(cell.getArea()+1) // CELL_SIZE))
+					if DEBUG:
+						print "NUM CELLS IN BLOB: %d" % (-(-(cell.getArea()+1) // CELL_SIZE))
 					count += (-(-(cell.getArea()+1) // CELL_SIZE))
 					break
 		self.pipeline.values["filteredCells"] = filteredCells
@@ -310,14 +313,14 @@ class FilterBlobsOp(Operation):
 			properArea = blob.getArea() > self.parameters["lowerArea"] and blob.getArea() < self.parameters["upperArea"]		
 			if properColorRange and properArea:
 				filteredBlobs.append(blob)
-			else:
+			"""else:
 				if DEBUG:
-					print "proper color? %s proper area? %s" % (properColorRange, properArea)
-		if DEBUG:
+					print "proper color? %s proper area? %s" % (properColorRange, properArea)"""
+		"""if DEBUG:
 			if len(self.parameters["blobs"]) == 0:
 				print "NO BLOBS"
 			else:
-				print "LENGTH OF FILTERED %ss: %d" % (self.parameters["blobs"][0].getBlobType(),len(filteredBlobs))
+				print "LENGTH OF FILTERED %ss: %d" % (self.parameters["blobs"][0].getBlobType(),len(filteredBlobs))"""
 		drawImg = self.pipeline.values["originalImg"].copy()
 		for blob in filteredBlobs:
 			x,y,w,h = blob.getBoundingBox()

@@ -59,7 +59,7 @@
 
     <operation name="ShowImageOp">
         <windowName>"thresholded (cells)"</windowName>
-        <on>True</on>
+        <on>False</on>
         <key>"img"</key>
     </operation>
 
@@ -90,7 +90,7 @@
     </operation>
 
     <operation name="FilterBlobsOp">
-        <lowerArea>1400</lowerArea>
+        <lowerArea>3000</lowerArea>
         <upperArea>100000</upperArea>
         <lowerHue>0</lowerHue>
         <upperHue>255</upperHue>
@@ -98,7 +98,7 @@
 
     <operation name="ShowImageOp">
         <windowName>"filtered blobs from contours (cells) - threshold method"</windowName>
-        <on>True</on>
+        <on>False</on>
         <key>"filteredBlobsImg"</key>
     </operation>
 </pipeline>
