@@ -81,9 +81,6 @@ def multi_process(start_num, end_num):
 	for i in xrange(start_num, end_num+1):
 		cellCount = main("/Users/Jon/Documents/College/Research/HealyLab/Trial1/IMG_"+str(i))
 		imgCellCount["IMG_"+str(i)] = cellCount
-		#raw_input()
-	#for key, value in imgCellCount.items():
-
 
 def getFilesInDir(path):
 	files = [ join(path,f) for f in listdir(path) if isfile(join(path,f)) and f[-4:].lower() in SUFFIXES ]
@@ -92,10 +89,10 @@ def getFilesInDir(path):
 if __name__=="__main__":
 	option = sys.argv[1]
 	if option == "-s":
-		imgPath = "raw/"+ sys.argv[2]
+		imgPath = INPUTDIR + sys.argv[2]
 		main(imgPath)
 	elif option == "-r":
-		files = getFilesInDir("/Users/Jon/Documents/College/Research/HealyLab/raw/")
+		files = getFilesInDir(INPUTDIR)
 		print files
 		f = files[eval(sys.argv[2])]
 		print f
