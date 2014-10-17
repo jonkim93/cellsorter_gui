@@ -95,7 +95,7 @@ if __name__=="__main__":
 		imgPath = "raw/"+ sys.argv[2]
 		main(imgPath)
 	elif option == "-r":
-		files = getFilesInDir("raw/")
+		files = getFilesInDir("/Users/Jon/Documents/College/Research/HealyLab/raw/")
 		print files
 		f = files[eval(sys.argv[2])]
 		print f
