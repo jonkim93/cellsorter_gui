@@ -29,10 +29,10 @@ def main(imgPath):
 	beadAttachedArgParser = ArgParser()
 
 	if THRESHOLD_CELLS:
-		segmentCellsPipeline = cellArgParser.parse("config/thresholdDetectCells.xml")
+		segmentCellsPipeline = cellArgParser.parse("config/cell_thresholdDetect.xml")
 	else:
-		segmentCellsPipeline = cellArgParser.parse("config/circleDetectCells.xml")
-	segmentBeadsPipeline = beadArgParser.parse("config/segmentBeads.xml")
+		segmentCellsPipeline = cellArgParser.parse("config/cell_circleDetect.xml")
+	segmentBeadsPipeline = beadArgParser.parse("config/bead_circleDetect.xml")
 	countBeadAttachedCellsPipeline = beadAttachedArgParser.parse("config/countBeadAttachedCells.xml")
 
 	subdividedImgs = getSubImages(imgPath)
