@@ -82,13 +82,19 @@
         <minDistance>35</minDistance>
         <param1>50</param1>
         <param2>10</param2>
-        <minRadius>25</minRadius>
+        <minRadius>20</minRadius>
         <maxRadius>35</maxRadius>
         <blobType>"Cell"</blobType>
     </operation>
 
     <operation name="ShowImageOp">
         <windowName>"unfilteredBlobsImg (cells) - circle"</windowName>
+        <on>True</on>
+        <key>"unfilteredBlobsImg"</key>
+    </operation>
+
+    <operation name="SaveImageOp">
+        <modifier>"cells"</modifier>
         <on>True</on>
         <key>"unfilteredBlobsImg"</key>
     </operation>

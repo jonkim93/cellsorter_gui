@@ -89,7 +89,7 @@
 
     <operation name="ShowImageOp">
         <windowName>"unfilteredBlobsImg (beads)"</windowName>
-        <on>False</on>
+        <on>True</on>
         <key>"unfilteredBlobsImg"</key>
     </operation>
 

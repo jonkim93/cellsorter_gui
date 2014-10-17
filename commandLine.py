@@ -5,6 +5,9 @@ from objects.pipeline import *
 import sys
 from objects.constants import *
 import cv2
+from os import listdir
+from os.path import isfile, join
+import collections
 
 
 def getSubImages(imgPath):
@@ -35,16 +38,24 @@ def main(imgPath):
 	subdividedImgs = getSubImages(imgPath)
 
 	cellCount = 0
-	for i in xrange(len(subdividedImgs)): #(14,16,20,21,25,26,27,30,32,33): 
+	for i in xrange(len(subdividedImgs)): 
+		segmentCellsPipeline.values["fileName"] = imgPath.split("/")[-1][:-4]
+		segmentBeadsPipeline.values["fileName"] = imgPath.split("/")[-1][:-4]	
+		countBeadAttachedCellsPipeline.values["fileName"] = imgPath.split("/")[-1][:-4]
+
+		if i in IGNORE_INDICES_48:
+			continue
 		if DEBUG:
 			print "PROCESSING IMG %d" % i
 			print "executing segment cells"
 		segmentCellsPipeline.values["img"] = subdividedImgs[i]
+		segmentCellsPipeline.values["index"] = i
 		cells = segmentCellsPipeline.execute()["blobs"]
 
 		if DEBUG:
 			print "executing segment beads"
 		segmentBeadsPipeline.values["img"] = subdividedImgs[i]
+		segmentBeadsPipeline.values["index"] = i
 		beads = segmentBeadsPipeline.execute()["blobs"]
 
 		if DEBUG:
@@ -52,6 +63,7 @@ def main(imgPath):
 		countBeadAttachedCellsPipeline.values["img"] = subdividedImgs[i]
 		countBeadAttachedCellsPipeline.values["cells"] = cells
 		countBeadAttachedCellsPipeline.values["beads"] = beads
+		countBeadAttachedCellsPipeline.values["index"] = i
 		results = countBeadAttachedCellsPipeline.execute()
 
 		if DEBUG:
@@ -62,21 +74,37 @@ def main(imgPath):
 		countBeadAttachedCellsPipeline.values = {}
 
 	print "%s TOTAL CELL COUNT: %d\n" % (imgPath.split("/")[-1],cellCount)
+	return cellCount
 
 def multi_process(start_num, end_num):
+	imgCellCount = collections.OrderedDict()
 	for i in xrange(start_num, end_num+1):
-		main("/Users/Jon/Documents/College/Research/HealyLab/Trial1/IMG_"+str(i))
-		raw_input()
+		cellCount = main("/Users/Jon/Documents/College/Research/HealyLab/Trial1/IMG_"+str(i))
+		imgCellCount["IMG_"+str(i)] = cellCount
+		#raw_input()
+	#for key, value in imgCellCount.items():
+
+
+def getFilesInDir(path):
+	files = [ join(path,f) for f in listdir(path) if isfile(join(path,f)) and f[-4:].lower() in SUFFIXES ]
+	return files
 
 if __name__=="__main__":
 	option = sys.argv[1]
-	if option == "s":
+	if option == "-s":
 		imgPath = "raw/"+ sys.argv[2]
 		main(imgPath)
-	elif option == "m":
+	elif option == "-r":
+		files = getFilesInDir("raw/")
+		print files
+		f = files[eval(sys.argv[2])]
+		print f
+		main(f)
+	elif option == "-m":
 		start_num = eval(sys.argv[2])
 		end_num = eval(sys.argv[3])
 		multi_process(start_num, end_num)
-	
+	else:
+		raise Exception("not a valid option")
 
 

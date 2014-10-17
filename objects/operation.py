@@ -220,6 +220,17 @@ class ShowImageOp(Operation):
 			cv2.waitKey(0)
 			cv2.destroyWindow(self.parameters["windowName"])
 
+class SaveImageOp(Operation):
+	def __init__(self, pipeline=None, staticParameters=None):
+		super(SaveImageOp, self).__init__(pipeline, cv2.imwrite, staticParameters, ["modifier", "on", "key", "path"])
+
+	def execute(self):
+		super(SaveImageOp, self).execute()
+		if self.parameters["on"]:
+			filePath = SAVEDIR+self.pipeline.values["fileName"]+"_"+self.parameters["modifier"]+"_"+str(self.pipeline.values["index"])+".jpg"
+			cv2.imwrite(filePath, self.pipeline.values[self.parameters["key"]])
+			print "successfully saved to ", filePath
+
 class LoadImageOp(Operation):
 	def __init__(self, pipeline=None, staticParameters=None):
 		super(LoadImageOp, self).__init__(pipeline, cv2.imread, staticParameters, ["imgPath"])
@@ -293,7 +304,7 @@ class CellBeadProximityFilterOp(Operation):
 				if cell.calculateDistance(bead) < self.parameters["maxDistance"]:
 					filteredCells.append(cell)
 					x,y,w,h = cell.getBoundingBox()
-					cv2.rectangle(self.pipeline.values["img"], (x,y), (x+w, y+h), (60,140,140),2 )
+					cv2.rectangle(self.pipeline.values["img"], (int(x),int(y)), (int(x+w), int(y+h)), (60,140,140),2 )
 					if DEBUG:
 						print "NUM CELLS IN BLOB: %d" % (-(-(cell.getArea()+1) // CELL_SIZE))
 					count += (-(-(cell.getArea()+1) // CELL_SIZE))

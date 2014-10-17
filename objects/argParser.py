@@ -20,7 +20,8 @@ nameToOp = {
 	"FilterBlobsOp": FilterBlobsOp,
 	"AdaptiveThresholdOp": AdaptiveThresholdOp,
 	"DistanceTransformOp": DistanceTransformOp,
-	"WatershedOp": WatershedOp
+	"WatershedOp": WatershedOp,
+	"SaveImageOp": SaveImageOp
 }
 
 class ArgParser(object):
