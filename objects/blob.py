@@ -3,13 +3,14 @@
 import math
 
 class Blob(object):
-	def __init__(self, blobType=None, center=None, boundingBox=None, area=None, color=None, roi=None):
+	def __init__(self, blobType=None, center=None, boundingBox=None, area=None, color=None, roi=None, convex=None):
 		self.blobType = blobType
 		self.center = center
 		self.boundingBox = boundingBox
 		self.area = area
 		self.color = color
 		self.roi = roi
+		self.convex = convex
 
 	def __str__(self):
 		return "BlobType: %s \n\tCenter: %s \n\tBounding Box: %s \n\tArea: %d \n\tColor: %s \n\t" % (str(self.blobType), str(self.center), str(self.boundingBox), self.area, str(self.color))

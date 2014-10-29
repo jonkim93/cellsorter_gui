@@ -80,10 +80,10 @@
         <constant name="cv2.cv.CV_HOUGH_GRADIENT">3</constant>
         <dp>1</dp>
         <minDistance>35</minDistance>
-        <param1>50</param1>
-        <param2>10</param2>
+        <param1>100</param1>
+        <param2>1</param2>
         <minRadius>20</minRadius>
-        <maxRadius>35</maxRadius>
+        <maxRadius>105</maxRadius>
         <blobType>"Cell"</blobType>
     </operation>
 
@@ -95,7 +95,7 @@
 
     <operation name="SaveImageOp">
         <modifier>"cells"</modifier>
-        <on>True</on>
+        <on>False</on>
         <key>"unfilteredBlobsImg"</key>
     </operation>
 

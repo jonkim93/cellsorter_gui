@@ -191,6 +191,7 @@ class GetBlobsFromContoursOp(Operation):
 		for i in xrange(len(contours)):
 			contour = contours[i]
 			m = cv2.moments(contour)
+			convex = cv2.isContourConvex(contour)
 			if m['m00'] == 0:
 				pass
 			else:
@@ -201,7 +202,7 @@ class GetBlobsFromContoursOp(Operation):
 				x,y,w,h = boundingBox
 				x0, x1, y0, y1 = self.getBounds(self.parameters["img"], x, x+w, y, y+h)
 				roi = self.parameters["hsvImg"][y0:y1, x0:x1]
-				blobs.append(Blob(self.parameters["blobType"], (cx, cy), boundingBox, area, None, roi))
+				blobs.append(Blob(self.parameters["blobType"], (cx, cy), boundingBox, area, None, roi, convex))
 				cv2.drawContours(self.parameters["img"], contours, i, (0, 255, 0), 1)
 				cv2.rectangle(self.pipeline.values["unfilteredBlobsImg"],(x,y),(x+w,y+h),(60,140,40),2)
 		self.pipeline.values["img"] = self.parameters["img"].copy()
@@ -334,6 +335,7 @@ class FilterBlobsOp(Operation):
 				print "LENGTH OF FILTERED %ss: %d" % (self.parameters["blobs"][0].getBlobType(),len(filteredBlobs))"""
 		drawImg = self.pipeline.values["originalImg"].copy()
 		for blob in filteredBlobs:
+			print blob.convex
 			x,y,w,h = blob.getBoundingBox()
 			cv2.rectangle(drawImg, (x,y),(x+w,y+h),(0,255,0),2)
 		self.pipeline.values["filteredBlobsImg"] = drawImg

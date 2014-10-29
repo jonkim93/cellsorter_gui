@@ -75,16 +75,23 @@
 
     <operation name="ShowImageOp">
         <windowName>"threholded post erode/dilate (cells)"</windowName>
-        <on>False</on>
+        <on>True</on>
         <key>"img"</key>
     </operation>
 
-    <operation name="GetBlobsFromContoursOp">
+    <operation name="GetBlobsFromCirclesOp">
+        <constant name="cv2.cv.CV_HOUGH_GRADIENT">3</constant>
+        <dp>1</dp>
+        <minDistance>35</minDistance>
+        <param1>50</param1>
+        <param2>10</param2>
+        <minRadius>20</minRadius>
+        <maxRadius>35</maxRadius>
         <blobType>"Cell"</blobType>
     </operation>
 
     <operation name="ShowImageOp">
-        <windowName>"blobs from contours (cells)"</windowName>
+        <windowName>"blobs from circles (cells)"</windowName>
         <on>False</on>
         <key>"unfilteredBlobsImg"</key>
     </operation>
@@ -98,7 +105,7 @@
 
     <operation name="ShowImageOp">
         <windowName>"filtered blobs from contours (cells) - threshold method"</windowName>
-        <on>False</on>
+        <on>True</on>
         <key>"filteredBlobsImg"</key>
     </operation>
 </pipeline>

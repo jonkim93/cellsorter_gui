@@ -29,8 +29,10 @@ def main(imgPath):
 	beadAttachedArgParser = ArgParser()
 
 	if THRESHOLD_CELLS:
+		print "USING THRESHOLD OPTION"
 		segmentCellsPipeline = cellArgParser.parse("config/cell_thresholdDetect.xml")
 	else:
+		print "USING CIRCLE DETECT OPTION"
 		segmentCellsPipeline = cellArgParser.parse("config/cell_circleDetect.xml")
 	segmentBeadsPipeline = beadArgParser.parse("config/bead_circleDetect.xml")
 	countBeadAttachedCellsPipeline = beadAttachedArgParser.parse("config/countBeadAttachedCells.xml")
@@ -43,7 +45,7 @@ def main(imgPath):
 		segmentBeadsPipeline.values["fileName"] = imgPath.split("/")[-1][:-4]	
 		countBeadAttachedCellsPipeline.values["fileName"] = imgPath.split("/")[-1][:-4]
 
-		if i in IGNORE_INDICES_48:
+		if i not in IGNORE_INDICES_48:
 			continue
 		if DEBUG:
 			print "PROCESSING IMG %d" % i
@@ -93,9 +95,7 @@ if __name__=="__main__":
 		main(imgPath)
 	elif option == "-r":
 		files = getFilesInDir(INPUTDIR)
-		print files
 		f = files[eval(sys.argv[2])]
-		print f
 		main(f)
 	elif option == "-m":
 		start_num = eval(sys.argv[2])
